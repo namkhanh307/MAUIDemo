@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MAUIDemo.Services;
+using MAUIDemo.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace MAUIDemo
 {
@@ -15,9 +17,17 @@ namespace MAUIDemo
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
     		builder.Logging.AddDebug();
-#endif
+
+            //Services
+            builder.Services.AddSingleton<IEmployeeService, EmployeeService>();
+            //Views
+            builder.Services.AddSingleton<EmployeesList>();
+            builder.Services.AddTransient<AddEmployee>();
+
+            //ViewModels
+            builder.Services.AddSingleton<EmployeesViewModel>();
+            builder.Services.AddTransient<AddEmployeeViewModel>();
 
             return builder.Build();
         }
